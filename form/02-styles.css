@@ -651,32 +651,29 @@
 /* Comment section
     ============================= */
 
-.post-comments {
+  .post-comments {
     width: 80%;
     margin: 10rem 0 0 auto;
     padding-left: 7rem;
-}
+  }
 
-.post-comments .section-title {
+  .post-comments .section-title {
     font-variant: small-caps;
-}
+  }
 
 /* Basic form
     ============================= */
 
-.form {
+  fieldset {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    border: none;
+    padding: 0 0 2rem;
+  }
+  form {
     display: flex;
     flex-direction: column;
     padding: 1rem 0;
     margin: 0;
-}
-.visually-hidden {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    margin: -1px;
-    padding: 0;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    border: 0;
-}
+  }
