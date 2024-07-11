@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8" />
+    <title>Task 5</title>
+    <!-- Load jQuery from CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+    <style>
+        table {
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+        td.remove-cell {
+            background-color: orange;
+            cursor: pointer;
+        }
+    </style>
+    <script type="application/javascript">
+        // Function to create the family tree table
+        function createFamilyTree() {
+            // Create an empty table and append to the body
+            $('<table>').append(
+                // Create table head (thead) with two cells (th)
+                $('<thead>').append(
+                    $('<tr>').append(
+                        $('<th>').text('Firstname'),
+                        $('<th>').text('Lastname')
+                    )
+                ),
+                // Create empty table body (tbody)
+                $('<tbody>')
+            ).appendTo('body');
+        }
+
+        // Function to add a new member to the family tree
+        function addNewMember(firstName, lastName) {
+            // Create a new row (tr) with three cells (td)
+            var newRow = $('<tr>').append(
+                $('<td>').text(firstName),
+                $('<td>').text(lastName),
+                $('<td>').addClass('remove-cell').text('(x)').click(function() {
+                    // On click of the third cell, remove the entire row
+                    $(this).closest('tr').remove();
+                })
+            );
+
+            // Append the new row to the table body
+            $('tbody').append(newRow);
+        }
+
+        // Call createFamilyTree to create the initial table structure
+        $(document).ready(function() {
+            createFamilyTree();
+
+            // Add new members using addNewMember function
+            addNewMember('Guillaume', 'Salva');
+            addNewMember('Arielle', 'Snizt');
+            addNewMember('Fanette', 'Snizt');
+            addNewMember('Gerard', 'Snizt');
+            addNewMember('Victor', 'Salva');
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,69 @@
+# Node.js
+/node_modules
+
+# Dependency directories
+/bower_components
+
+# Logs and databases
+*.log
+*.sqlite
+*.sqlite3
+*.log.*
+
+# Environment variables
+.env
+
+# Compiled output
+/dist
+/build
+/out
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDEs and editors
+/.idea
+/.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Miscellaneous
+*.class
+*.iml
+*.jar
+*.war
+*.ear
+*.exe
+*.dll
+*.pdb
+*.mdb
+*.ico
+*.pfx
+*.pem
+
+# Compiled Python files
+*.pyc
+
+# Compiled Java classes
+*.class
+
+# Compiled Ruby files
+*.gem
+
+# Compiled PHP files
+*.php[0-9]*.ts
+
+# Compiled Node.js files
+*.js[0-9]*.ts
+
+# Compiled Java classes
+*.class

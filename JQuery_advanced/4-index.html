@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8" />
+    <title>Task 4</title>
+    <!-- Load jQuery from CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+    <script type="application/javascript">
+        // Function to create the family tree table
+        function createFamilyTree() {
+            // Create the table structure
+            var tableHTML = '<table>' +
+                                '<thead>' +
+                                    '<tr>' +
+                                        '<th>Firstname</th>' +
+                                        '<th>Lastname</th>' +
+                                    '</tr>' +
+                                '</thead>' +
+                                '<tbody>' +
+                                    '<tr>' +
+                                        '<td>Guillaume</td>' +
+                                        '<td>Salva</td>' +
+                                    '</tr>' +
+                                    '<tr>' +
+                                        '<td>Paulette</td>' +
+                                        '<td>Salva</td>' +
+                                    '</tr>' +
+                                    '<tr>' +
+                                        '<td>Antoine</td>' +
+                                        '<td>Salva</td>' +
+                                    '</tr>' +
+                                '</tbody>' +
+                            '</table>';
+
+            // Append the table to the body of the page
+            $('body').append(tableHTML);
+        }
+
+        // Function to replace the family tree table rows
+        function replaceFamilyTree() {
+            // Define the new rows content
+            var newRows = '<tr><td>Gerard</td><td>Bonissa</td></tr>';
+
+            // Replace the content of tbody with the new rows
+            $('tbody').html(newRows);
+        }
+
+        // Call createFamilyTree and replaceFamilyTree functions when the document is ready
+        $(document).ready(function() {
+            createFamilyTree();
+            replaceFamilyTree();
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>

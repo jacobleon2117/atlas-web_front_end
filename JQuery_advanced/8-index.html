@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8" />
+    <title>Task 8</title>
+    <!-- Load jQuery from CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        form {
+            margin-bottom: 20px;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin-bottom: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        li p {
+            margin: 5px 0;
+        }
+        li p span {
+            font-weight: bold;
+        }
+        #pagination {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+        }
+        #pagination li {
+            cursor: pointer;
+            margin-left: 10px;
+            font-weight: normal;
+        }
+        #pagination li.active {
+            font-weight: bold;
+        }
+    </style>
+    <script type="application/javascript">
+        // Function to create the search form and pagination
+        function createSearchForm() {
+            // Create form elements and append to the body
+            $('<form>').append(
+                $('<input>').attr('type', 'text').attr('placeholder', 'Search Wikipedia').attr('id', 'search-input'),
+                $('<input>').attr('type', 'submit').val('Search').click(function(event) {
+                    // Prevent form submission
+                    event.preventDefault();
+
+                    // Get the value of the search input
+                    var searchTerm = $('#search-input').val();
+
+                    // Call queryWikipedia function with the search term and default offset
+                    queryWikipedia(searchTerm);
+                }),
+                $('<ul>').attr('id', 'search-results'), // Create an empty ul for results
+                $('<ul>').attr('id', 'pagination') // Create an empty ul for pagination
+            ).appendTo('body');
+        }
+
+        // Function to add a new article to the search results
+        function addNewArticle(id, title, snippet) {
+            // Create a new list item (li) and append to the ul
+            $('<li>').append(
+                $('<p>').append(
+                    $('<span>').text('ID: ' + id),
+                    $('<b>').text(title)
+                ),
+                $('<p>').text(snippet)
+            ).appendTo('#search-results');
+        }
+
+        // Function to build pagination links
+        function buildPagination(totalItems, itemsPerPage, currentOffset) {
+            // Clear previous pagination links
+            $('#pagination').empty();
+
+            // Calculate total number of pages
+            var totalPages = Math.ceil(totalItems / itemsPerPage);
+
+            // Create pagination links
+            for (var i = 0; i < totalPages; i++) {
+                var pageNumber = i + 1;
+                $('<li>').text(pageNumber).click(function() {
+                    var offset = i * itemsPerPage; // Calculate offset
+                    queryWikipedia($('#search-input').val(), offset); // Call queryWikipedia with new offset
+                }).appendTo('#pagination');
+            }
+
+            // Highlight current page
+            $('#pagination li').eq(currentOffset / itemsPerPage).addClass('active');
+        }
+
+        // Function to query Wikipedia API and display search results
+        function queryWikipedia(searchTerm, offset = 0) {
+            // Define the URL for the Wikipedia API
+            var url = 'https://en.wikipedia.org/w/api.php';
+
+            // Define parameters for the API request
+            var params = {
+                action: 'query',
+                list: 'search',
+                srsearch: searchTerm,
+                format: 'json',
+                sroffset: offset, // Include offset parameter
+                srlimit: 10 // Limit number of results per page
+            };
+
+            // Make AJAX request to Wikipedia API
+            $.ajax({
+                url: url,
+                data: params,
+                dataType: 'jsonp',
+                success: function(response) {
+                    // Clear previous search results
+                    $('#search-results').empty();
+
+                    // Iterate through each result and call addNewArticle function
+                    response.query.search.forEach(function(result) {
+                        addNewArticle(result.pageid, result.title, result.snippet);
+                    });
+
+                    // Call buildPagination with totalhits, itemsPerPage, and current offset
+                    buildPagination(response.query.totalhits, params.srlimit, offset);
+                },
+                error: function(error) {
+                    console.error('Error fetching data from Wikipedia API:', error);
+                }
+            });
+        }
+
+        // Call createSearchForm when the document is ready
+        $(document).ready(function() {
+            createSearchForm();
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>

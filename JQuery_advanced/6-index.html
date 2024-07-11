@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="utf-8" />
+    <title>Task 6</title>
+    <!-- Load jQuery from CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+    <style>
+        table {
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: center;
+        }
+        td.remove-cell {
+            background-color: orange;
+            cursor: pointer;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        form input, form select {
+            margin-right: 10px;
+        }
+    </style>
+    <script type="application/javascript">
+        // Function to create the family tree table
+        function createFamilyTree() {
+            // Create an empty table and append to the body
+            $('<table>').append(
+                // Create table head (thead) with two cells (th)
+                $('<thead>').append(
+                    $('<tr>').append(
+                        $('<th>').text('Firstname'),
+                        $('<th>').text('Lastname')
+                    )
+                ),
+                // Create empty table body (tbody)
+                $('<tbody>')
+            ).appendTo('body');
+        }
+
+        // Function to add a new member to the family tree
+        function addNewMember(firstName, lastName, position) {
+            // Create a new row (tr) with three cells (td)
+            var newRow = $('<tr>').append(
+                $('<td>').text(firstName),
+                $('<td>').text(lastName),
+                $('<td>').addClass('remove-cell').text('(x)').click(function() {
+                    // On click of the third cell, remove the entire row
+                    $(this).closest('tr').remove();
+                })
+            );
+
+            // Determine where to add the new row based on position argument
+            if (position === 'before') {
+                $('tbody').prepend(newRow); // Add row at the top
+            } else {
+                $('tbody').append(newRow); // Add row at the bottom
+            }
+        }
+
+        // Function to create the form to add new members
+        function createForm() {
+            // Create form elements and append before the table
+            $('<form>').append(
+                $('<input>').attr('type', 'text').attr('placeholder', 'First Name').addClass('first-name'),
+                $('<input>').attr('type', 'text').attr('placeholder', 'Last Name').addClass('last-name'),
+                $('<select>').append(
+                    $('<option>').attr('value', 'before').text('Before'),
+                    $('<option>').attr('value', 'after').text('After')
+                ).addClass('position'),
+                $('<input>').attr('type', 'submit').val('Add Member').click(function(event) {
+                    // Prevent form submission
+                    event.preventDefault();
+
+                    // Get input values and position from form
+                    var firstName = $('.first-name').val();
+                    var lastName = $('.last-name').val();
+                    var position = $('.position').val();
+
+                    // Call addNewMember function with input values and position
+                    addNewMember(firstName, lastName, position);
+                })
+            ).prependTo('body');
+        }
+
+        // Call createFamilyTree to create the initial table structure
+        $(document).ready(function() {
+            createFamilyTree();
+            createForm();
+            
+            // Prepopulate with initial family members
+            addNewMember('Guillaume', 'Salva', 'after');
+            addNewMember('Arielle', 'Snizt', 'after');
+            addNewMember('Fanette', 'Snizt', 'after');
+            addNewMember('Gerard', 'Snizt', 'after');
+            addNewMember('Victor', 'Salva', 'after');
+        });
+    </script>
+</head>
+<body>
+
+</body>
+</html>

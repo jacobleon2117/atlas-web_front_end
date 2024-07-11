@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Posts</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<script>
+    // Function to add a post row to the page
+    function addPostRow(data) {
+        var paragraph = $('<p></p>');
+        var span = $('<span></span>').text('Post created with id ' + data.id + ', title: ' + data.title + ', author: ' + data.author);
+        paragraph.append(span);
+        $('body').append(paragraph);
+    }
+
+    // Function to list posts from the server
+    function listPosts() {
+        $.ajax({
+            url: 'http://localhost:3000/posts',
+            method: 'GET',
+            success: function(response) {
+                response.forEach(function(post) {
+                    addPostRow(post);
+                });
+            },
+            error: function() {
+                alert('Server Error');
+            }
+        });
+    }
+
+    // Function to build the form for creating a new post
+    function buildForm() {
+        var form = $('<form></form>');
+        var authorDiv = $('<div></div>');
+        var titleLabel = $('<label for="author">Author</label>');
+        var authorInput = $('<input type="text" id="author" name="author">');
+        authorDiv.append(titleLabel).append(authorInput);
+
+        var titleDiv = $('<div></div>');
+        var authorLabel = $('<label for="title">Title</label>');
+        var titleTextarea = $('<textarea id="title" name="title"></textarea>');
+        titleDiv.append(authorLabel).append(titleTextarea);
+
+        var submitButton = $('<input type="submit">');
+        form.append(authorDiv).append(titleDiv).append(submitButton);
+
+        // Handle form submission
+        form.on('submit', function(event) {
+            event.preventDefault();
+            sendForm();
+        });
+
+        $('body').append(form);
+    }
+
+    // Function to handle form submission
+    function sendForm() {
+        $('form').after('<p>About to send the query to the API</p>');
+
+        var data = {
+            title: $('#title').val(),
+            author: $('#author').val()
+        };
+
+        $.ajax({
+            url: 'http://localhost:3000/posts',
+            method: 'POST',
+            data: data,
+            success: function(response) {
+                addPostRow(response);
+            },
+            error: function() {
+                alert('Error sending the POST query');
+            }
+        });
+    }
+
+    // Call listPosts and buildForm when the page loads
+    $(document).ready(function() {
+        listPosts();
+        buildForm();
+    });
+</script>
+
+</body>
+</html>

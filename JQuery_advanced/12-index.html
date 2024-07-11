@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manage Posts</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<script>
+    // Function to add a post row to the page
+    function addPostRow(data) {
+        var paragraph = $('<p></p>').attr('id', 'row-' + data.id);
+        var deleteSpan = $('<span></span>').text('(delete)').css('cursor', 'pointer').click(function() {
+            deletePost(data.id);
+        });
+        var postInfoSpan = $('<span></span>').text('Post created with id ' + data.id + ', title: ' + data.title + ', author: ' + data.author);
+        
+        paragraph.append(deleteSpan).append(postInfoSpan);
+        $('body').append(paragraph);
+    }
+
+    // Function to list posts from the server
+    function listPosts() {
+        $.ajax({
+            url: 'http://localhost:3000/posts',
+            method: 'GET',
+            success: function(response) {
+                response.forEach(function(post) {
+                    addPostRow(post);
+                });
+            },
+            error: function() {
+                alert('Server Error');
+            }
+        });
+    }
+
+    // Function to handle post deletion
+    function deletePost(id) {
+        $.ajax({
+            url: 'http://localhost:3000/posts/' + id,
+            method: 'DELETE',
+            success: function() {
+                $('#row-' + id).remove();
+            },
+            error: function() {
+                alert('Post was not deleted');
+            }
+        });
+    }
+
+    // Call listPosts when the page loads
+    $(document).ready(function() {
+        listPosts();
+    });
+</script>
+
+</body>
+</html>
