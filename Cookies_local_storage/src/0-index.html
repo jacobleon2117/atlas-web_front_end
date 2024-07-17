@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookies & Local Storage</title>
+    <script>
+        function setCookies() {
+            const firstname = document.getElementById('firstname').value;
+            const email = document.getElementById('email').value;
+            document.cookie = `firstname=${firstname}; path=/`;
+            document.cookie = `email=${email}; path=/`;
+        }
+
+        function showCookies() {
+            const cookies = document.cookie.split('; ').reduce((acc, cookie) => {
+                const [name, value] = cookie.split('=');
+                acc[name] = value;
+                return acc;
+            }, {});
+
+            const p = document.createElement('p');
+            p.innerHTML = `Cookies: ${JSON.stringify(cookies)}`;
+            document.getElementById('cookies').appendChild(p);
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <h1>Login to the website</h1>
+        <div>
+            <label for="firstname">Name:</label>
+            <input type="text" id="firstname" name="firstname">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email">
+            <button onclick="setCookies()">Sign me up</button>
+        </div>
+        <div id="cookies">
+            <h2>Cookies</h2>
+            <button onclick="showCookies()">Show the cookies</button>
+        </div>
+    </div>
+</body>
+</html>

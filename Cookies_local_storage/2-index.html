@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookies & Local Storage</title>
+    <script>
+        function setCookies() {
+            const firstname = document.getElementById('firstname').value;
+            const email = document.getElementById('email').value;
+            const expires = new Date();
+            expires.setTime(expires.getTime() + (10 * 24 * 60 * 60 * 1000));
+
+            document.cookie = `firstname=${firstname}; expires=${expires.toUTCString()}; path=/`;
+            document.cookie = `email=${email}; expires=${expires.toUTCString()}; path=/`;
+        }
+
+        function getCookie(name) {
+            const cookies = document.cookie.split('; ').reduce((acc, cookie) => {
+                const [cookieName, cookieValue] = cookie.split('=');
+                acc[cookieName] = cookieValue;
+                return acc;
+            }, {});
+
+            return cookies[name] || '';
+        }
+
+        function showCookies() {
+            const firstname = getCookie('firstname');
+            const email = getCookie('email');
+
+            const p = document.createElement('p');
+            p.textContent = `Email: ${email} - Firstname: ${firstname}`;
+            document.getElementById('cookieDetails').appendChild(p);
+        }
+    </script>
+</head>
+<body>
+    <div>
+        <h1>Login to the website</h1>
+        <div>
+            <label for="firstname">Name:</label>
+            <input type="text" id="firstname" name="firstname">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email">
+            <button onclick="setCookies()">Sign me up</button>
+        </div>
+        <div id="cookieDetails">
+            <h2>Cookie Details</h2>
+            <button onclick="showCookies()">Show Cookie Details</button>
+        </div>
+    </div>
+</body>
+</html>

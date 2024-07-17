@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local Storage Shopping Cart</title>
+</head>
+<body>
+    <div id="shoppingCart">
+        <h2>Shopping Cart</h2>
+        <ul id="cartItems"></ul>
+        <p id="cartMessage"></p>
+    </div>
+    
+    <script>
+        const availableItems = ["Shampoo", "Soap", "Sponge", "Water"];
+        const itemAddedFlag = "_added";
+
+        function isLocalStorageSupported() {
+            try {
+                localStorage.setItem("test", "test");
+                localStorage.removeItem("test");
+                return true;
+            } catch (e) {
+                return false;
+            }
+        }
+
+        if (!isLocalStorageSupported()) {
+            alert("Sorry, your browser does not support local storage. Try again with a better one.");
+        }
+
+        function createShoppingCart() {
+            const cartItems = document.getElementById('cartItems');
+
+            availableItems.forEach(item => {
+                const li = document.createElement('li');
+                li.textContent = item;
+                li.style.cursor = 'pointer';
+                li.addEventListener('click', () => addToCart(item.toLowerCase(), true));
+                cartItems.appendChild(li);
+            });
+        }
+
+        function addToCart(itemKey, isNewItem) {
+            if (isNewItem) {
+                localStorage.setItem(`${itemKey}${itemAddedFlag}`, true);
+            }
+            localStorage.setItem(itemKey, true);
+            displayCartMessage();
+        }
+
+        function displayCartMessage() {
+            const cartItems = Object.keys(localStorage).filter(key => key !== "test" && !key.endsWith(itemAddedFlag));
+            const cartCount = cartItems.length;
+            const cartMessage = document.getElementById('cartMessage');
+            if (cartCount > 0) {
+                cartMessage.textContent = `You previously had ${cartCount} item${cartCount !== 1 ? 's' : ''} in your cart.`;
+            } else {
+                cartMessage.textContent = `Your cart is empty.`;
+            }
+        }
+
+        window.onload = function() {
+            createShoppingCart();
+            displayCartMessage();
+        };
+    </script>
+</body>
+</html>

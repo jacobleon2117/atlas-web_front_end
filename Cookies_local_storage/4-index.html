@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookies & Local Storage</title>
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@3.0.5/dist/js.cookie.min.js"></script>
+    <script>
+        function setCookiesAndShowWelcomeMessage() {
+            const firstname = document.getElementById('firstname').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const expires = new Date();
+            expires.setTime(expires.getTime() + (10 * 24 * 60 * 60 * 1000));
+
+            Cookies.set('firstname', firstname, { expires: expires, path: '/' });
+            Cookies.set('email', email, { expires: expires, path: '/' });
+
+            showWelcomeMessageOrForm();
+        }
+
+        function deleteCookiesAndShowForm() {
+            Cookies.remove('firstname', { path: '/' });
+            Cookies.remove('email', { path: '/' });
+            showForm();
+        }
+
+        function showWelcomeMessageOrForm() {
+            const firstname = Cookies.get('firstname');
+            const body = document.body;
+            const welcomeMessage = document.createElement('h1');
+            welcomeMessage.id = 'welcomeMessage';
+            if (!firstname) {
+                showForm();
+            } else {
+                const logoutLink = document.createElement('a');
+                logoutLink.href = '#';
+                logoutLink.textContent = '(logout)';
+                logoutLink.style.fontStyle = 'italic';
+                logoutLink.style.marginLeft = '10px';
+                logoutLink.onclick = function() {
+                    deleteCookiesAndShowForm();
+                    welcomeMessage.style.display = 'none';
+                    showForm();
+                    return false;
+                };
+                welcomeMessage.textContent = `Welcome: ${firstname}`;
+                welcomeMessage.appendChild(logoutLink);
+                body.innerHTML = '';
+                body.appendChild(welcomeMessage);
+            }
+        }
+
+        function showForm() {
+            const formContainer = document.getElementById('formContainer');
+            const welcomeMessage = document.getElementById('welcomeMessage');
+            if (welcomeMessage) {
+                welcomeMessage.style.display = 'none';
+            }
+            formContainer.style.display = 'block';
+        }
+
+        window.onload = function() {
+            showWelcomeMessageOrForm();
+        };
+    </script>
+</head>
+<body>
+    <div id="formContainer">
+        <h2>Login to the website</h2>
+        <div>
+            <label for="firstname">Name:</label>
+            <input type="text" id="firstname" name="firstname" autocomplete="given-name">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" autocomplete="email">
+            <button type="button" onclick="setCookiesAndShowWelcomeMessage()">Log me in</button>
+        </div>
+    </div>
+</body>
+</html>
