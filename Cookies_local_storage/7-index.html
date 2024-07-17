@@ -12,28 +12,25 @@
     <div id="cartContent"></div>
 
     <script>
-        // Array of available items
         const availableItems = ['Shampoo', 'Soap', 'Sponge', 'Water'];
 
-        // Check if session storage is supported
+
         if (!('sessionStorage' in window)) {
             alert("Sorry, your browser does not support Web storage. Try again with a better one");
         } else {
-            // Function to get cart from storage
             function getCartFromStorage() {
                 const cartString = sessionStorage.getItem('cart');
                 return cartString ? JSON.parse(cartString) : {};
             }
 
-            // Function to add item to cart
-            function addItemToCart(item) {
+                function addItemToCart(item) {
                 const cart = getCartFromStorage();
                 cart[item] = (cart[item] || 0) + 1;
                 sessionStorage.setItem('cart', JSON.stringify(cart));
                 displayCart();
             }
 
-            // Function to remove item from cart
+
             function removeItemFromCart(item) {
                 const cart = getCartFromStorage();
                 delete cart[item];
@@ -41,13 +38,12 @@
                 displayCart();
             }
 
-            // Function to clear cart
+ 
             function clearCart() {
                 sessionStorage.removeItem('cart');
                 displayCart();
             }
 
-            // Function to create store
             function createStore() {
                 const productList = document.getElementById('productList');
                 availableItems.forEach(item => {
@@ -58,7 +54,6 @@
                 });
             }
 
-            // Modified function to display cart
             function displayCart() {
                 const cartContent = document.getElementById('cartContent');
                 const cart = getCartFromStorage();
@@ -78,8 +73,6 @@
                     cartContent.insertBefore(clearButton, cartContent.firstChild);
                 }
             }
-
-            // Call createStore to initialize the product list
             createStore();
         }
     </script>

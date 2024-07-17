@@ -1,18 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
-    <meta charset="UTF-8">
-    <title>List Posts</title>
+    <meta charset="utf-8" />
+    <title>Task 10</title>
+    <!-- Load jQuery from CDN -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 
 <script>
-    // Function to add a post row to the page
+    // Function to add a new post row
     function addPostRow(data) {
-        var paragraph = $('<p></p>');
-        var span = $('<span></span>').text('Post created with id ' + data.id + ', title: ' + data.title + ', author: ' + data.author);
-        paragraph.append(span);
+        var paragraph = $('<p><span>Post created with id ' + data.id + ', title: ' + data.title + ', author: ' + data.author + '</span></p>');
         $('body').append(paragraph);
     }
 
