@@ -1,0 +1,77 @@
+.btn-primary {
+    background-color: #E0003C;
+    border-color: #E0003C;
+}
+
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active {
+    background-color: #BC1340 !important;
+    border-color: #BC1340 !important;
+}
+
+.btn-outline-primary {
+    color: #E0003C;
+    border-color: #E0003C;
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:focus {
+    background-color: #E0003C;
+    border-color: #E0003C;
+}
+
+a,
+.text-dark {
+    color: #E0003C !important;
+}
+
+a:hover,
+a:focus,
+.text-dark:hover,
+.text-dark:focus {
+    color: #E0003C !important;
+    text-decoration: none;
+}
+
+.card {
+    border-radius: 1rem !important;
+    border: 1px solid #E0003C !important;
+    overflow: hidden;
+}
+
+.card-header {
+    border-bottom: 1px solid #E0003C !important;
+    background-color: transparent;
+}
+
+.card-header:first-child {
+    border-radius: calc(1rem - 1px) calc(1rem - 1px) 0 0 !important;
+}
+
+.card-footer {
+    border-top: 1px solid #E0003C !important;
+    background-color: transparent;
+}
+
+.text-muted {
+    color: #8C8C8C !important;
+}
+
+.card-header {
+    background-color: #E0003C !important;
+    color: white !important;
+}
+
+.card-header h4 {
+    color: white !important;
+}
+
+.nav-link {
+    color: #E0003C !important;
+}
+
+.border-bottom {
+    border-bottom-color: #E0003C !important;
+}
